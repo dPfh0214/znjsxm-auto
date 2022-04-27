@@ -11,6 +11,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/adshao/go-binance/v2"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
@@ -184,4 +185,8 @@ func setEnv() {
 	dbUser = os.Getenv("DB_USER")
 	dbPassword = os.Getenv("DB_PASSWORD")
 	dbName = os.Getenv("DB_NAME")
+
+	client = binance.NewClient(apiKey, secretKey)
+	futuresClient = binance.NewFuturesClient(apiKey, secretKey)   // USDT-M Futures
+	deliveryClient = binance.NewDeliveryClient(apiKey, secretKey) // Coin-M Futures
 }

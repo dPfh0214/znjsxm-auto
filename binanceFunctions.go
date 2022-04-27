@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/adshao/go-binance/v2"
+	"github.com/adshao/go-binance/v2/delivery"
 	"github.com/adshao/go-binance/v2/futures"
 )
 
@@ -13,11 +14,11 @@ var (
 	secretKey = ""
 )
 
-type binanceFunction struct{}
+var client *binance.Client
+var futuresClient *futures.Client   // USDT-M Futures
+var deliveryClient *delivery.Client // Coin-M Futures
 
-var client = binance.NewClient(apiKey, secretKey)
-var futuresClient = binance.NewFuturesClient(apiKey, secretKey)   // USDT-M Futures
-var deliveryClient = binance.NewDeliveryClient(apiKey, secretKey) // Coin-M Futures
+type binanceFunction struct{}
 
 func (*binanceFunction) createBuyOrder(symbol string, quantity string, price string) {
 	log.Println("createBuyOrder:")
