@@ -76,7 +76,7 @@ func checkDiff(tempPositions []position) {
 						if amt2.Cmp(new(big.Float).SetFloat64(0)) == 1 {
 							if amt.Cmp(amt2) == -1 {
 								log.Println(val.Symbol + " changed LONG++ ==================================")
-								printRes(val)
+								printRes(val2)
 
 								difference := new(big.Float).Sub(amt2, amt)
 
@@ -84,7 +84,7 @@ func checkDiff(tempPositions []position) {
 
 							} else if amt.Cmp(amt2) == 1 {
 								log.Println(val.Symbol + " changed LONG-- ==================================")
-								printRes(val)
+								printRes(val2)
 
 								difference := new(big.Float).Sub(amt, amt2)
 
@@ -98,7 +98,7 @@ func checkDiff(tempPositions []position) {
 							bf.closePosition(val.Symbol, makeQuantity(amt), futures.PositionSideTypeLong)
 
 							log.Println(val.Symbol + " created SHORT ==================================")
-							printRes(val)
+							printRes(val2)
 
 							bf.createFutureShortOrder(val.Symbol, makeQuantity(amt2), fmt.Sprintf("%f", val.MarkPrice), "market")
 						}
@@ -106,7 +106,7 @@ func checkDiff(tempPositions []position) {
 						if amt2.Cmp(new(big.Float).SetFloat64(0)) == -1 {
 							if amt.Cmp(amt2) == 1 {
 								log.Println(val.Symbol + " changed SHORT++ ==================================")
-								printRes(val)
+								printRes(val2)
 
 								difference := new(big.Float).Sub(amt2.Abs(amt2), amt.Abs(amt))
 
@@ -114,7 +114,7 @@ func checkDiff(tempPositions []position) {
 
 							} else if amt.Cmp(amt2) == -1 {
 								log.Println(val.Symbol + " changed SHORT-- ==================================")
-								printRes(val)
+								printRes(val2)
 
 								difference := new(big.Float).Sub(amt.Abs(amt), amt2.Abs(amt2))
 
@@ -128,7 +128,7 @@ func checkDiff(tempPositions []position) {
 							bf.closePosition(val.Symbol, makeQuantity(amt), futures.PositionSideTypeShort)
 
 							log.Println(val.Symbol + " created LONG ==================================")
-							printRes(val)
+							printRes(val2)
 
 							bf.createFutureLongOrder(val.Symbol, makeQuantity(amt2), fmt.Sprintf("%f", val.MarkPrice), "market")
 						}
