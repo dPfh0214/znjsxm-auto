@@ -95,7 +95,7 @@ func (*binanceFunction) getOrderList(symbol string) {
 
 func (*binanceFunction) setLeverage(symbol string) {
 	// log.Println("setLeverage:")
-	_, err := futuresClient.NewChangeLeverageService().Leverage(5).Symbol(symbol).Do(context.Background())
+	_, err := futuresClient.NewChangeLeverageService().Leverage(leverage).Symbol(symbol).Do(context.Background())
 	if err != nil {
 		// log.Println(err)
 		return
@@ -187,7 +187,7 @@ func (*binanceFunction) createFutureShortOrder(symbol string, quantity string, p
 	log.Println(order)
 }
 
-func (*binanceFunction) closePosition(symbol string, quantity string, side bool) {
+func (*binanceFunction) closePosition(symbol string, quantity string, side futures.PositionSideType) {
 	bf.setLeverage(symbol)
 	bf.setMarginType(symbol)
 	bf.setPositionMode()
@@ -195,17 +195,9 @@ func (*binanceFunction) closePosition(symbol string, quantity string, side bool)
 	log.Println("closePosition:")
 	log.Println(symbol, quantity, side)
 
-	var positionSide futures.PositionSideType
-
-	if !side {
-		positionSide = futures.PositionSideTypeLong
-	} else {
-		positionSide = futures.PositionSideTypeLong
-	}
-
 	order, err := futuresClient.NewCreateOrderService().Symbol(symbol).
 		Side(futures.SideTypeSell).Type(futures.OrderTypeMarket).
-		Quantity(quantity).PositionSide(positionSide).
+		Quantity(quantity).PositionSide(side).
 		Do(context.Background())
 
 	if err != nil {

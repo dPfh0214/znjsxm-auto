@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/adshao/go-binance/v2"
+	"github.com/adshao/go-binance/v2/futures"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
@@ -32,11 +33,12 @@ var defaultClient = &http.Client{Timeout: 10 * time.Second}
 var positions []position
 var bf = new(binanceFunction)
 
-var leverage = big.NewFloat(1000)
+var ratio = big.NewFloat(200)
+var leverage = 20
 
 func main() {
 	setEnv()
-	// setDb()
+
 	err := getJson("https://laplataquant.me", &positions)
 	if err != nil {
 		log.Println(err)
@@ -55,51 +57,101 @@ func startBot() {
 			continue
 		}
 		checkDiff(tempPositions)
-		time.Sleep(time.Second * 2)
+		time.Sleep(time.Second * 1)
 	}
 }
 
 func checkDiff(tempPositions []position) {
 	if len(positions) > 0 {
 		for _, val := range positions {
+			amt := new(big.Float).SetFloat64(val.Amount)
 			sellAll := true
 			for _, val2 := range tempPositions {
 				if val.Symbol == val2.Symbol {
 					sellAll = false
 
-					amt := new(big.Float).SetFloat64(val.Amount)
 					amt2 := new(big.Float).SetFloat64(val2.Amount)
 
-					if amt.Cmp(amt2) == -1 {
-						log.Println(val.Symbol + " changed ++ ==================================")
-						printRes(val)
+					if amt.Cmp(new(big.Float).SetFloat64(0)) == 1 {
+						if amt2.Cmp(new(big.Float).SetFloat64(0)) == 1 {
+							if amt.Cmp(amt2) == -1 {
+								log.Println(val.Symbol + " changed LONG++ ==================================")
+								printRes(val)
 
-						difference := new(big.Float).Sub(amt2, amt)
-						if val.TradeBefore {
-							bf.createFutureShortOrder(val.Symbol, makeQuantity(difference), fmt.Sprintf("%f", val.MarkPrice), "market")
+								difference := new(big.Float).Sub(amt2, amt)
+
+								bf.createFutureLongOrder(val.Symbol, makeQuantity(difference), fmt.Sprintf("%f", val.MarkPrice), "market")
+
+							} else if amt.Cmp(amt2) == 1 {
+								log.Println(val.Symbol + " changed LONG-- ==================================")
+								printRes(val)
+
+								difference := new(big.Float).Sub(amt, amt2)
+
+								bf.closePosition(val.Symbol, makeQuantity(difference), futures.PositionSideTypeLong)
+							}
 
 						} else {
-							bf.createFutureLongOrder(val.Symbol, makeQuantity(difference), fmt.Sprintf("%f", val.MarkPrice), "market")
+							log.Println(val.Symbol + " sellAll LONG ==================================")
+							printRes(val)
+
+							bf.closePosition(val.Symbol, makeQuantity(amt), futures.PositionSideTypeLong)
+
+							log.Println(val.Symbol + " created SHORT ==================================")
+							printRes(val)
+
+							bf.createFutureShortOrder(val.Symbol, makeQuantity(amt2), fmt.Sprintf("%f", val.MarkPrice), "market")
 						}
+					} else {
+						if amt2.Cmp(new(big.Float).SetFloat64(0)) == -1 {
+							if amt.Cmp(amt2) == 1 {
+								log.Println(val.Symbol + " changed SHORT++ ==================================")
+								printRes(val)
 
-					} else if amt.Cmp(amt2) == 1 {
-						log.Println(val.Symbol + " changed -- ==================================")
-						printRes(val)
+								difference := new(big.Float).Sub(amt2.Abs(amt2), amt.Abs(amt))
 
-						difference := new(big.Float).Sub(amt, amt2)
-						bf.closePosition(val.Symbol, makeQuantity(difference), val.TradeBefore)
+								bf.createFutureShortOrder(val.Symbol, makeQuantity(difference), fmt.Sprintf("%f", val.MarkPrice), "market")
+
+							} else if amt.Cmp(amt2) == -1 {
+								log.Println(val.Symbol + " changed SHORT-- ==================================")
+								printRes(val)
+
+								difference := new(big.Float).Sub(amt.Abs(amt), amt2.Abs(amt2))
+
+								bf.closePosition(val.Symbol, makeQuantity(difference), futures.PositionSideTypeLong)
+							}
+
+						} else {
+							log.Println(val.Symbol + " sellAll SHORT ==================================")
+							printRes(val)
+
+							bf.closePosition(val.Symbol, makeQuantity(amt), futures.PositionSideTypeShort)
+
+							log.Println(val.Symbol + " created LONG ==================================")
+							printRes(val)
+
+							bf.createFutureLongOrder(val.Symbol, makeQuantity(amt2), fmt.Sprintf("%f", val.MarkPrice), "market")
+						}
 					}
 				}
 			}
 			if sellAll {
-				log.Println(val.Symbol + " sellAll ==================================")
-				printRes(val)
+				if amt.Cmp(new(big.Float).SetFloat64(0)) == 1 {
+					log.Println(val.Symbol + " sellAll LONG ==================================")
+					printRes(val)
 
-				bf.closePosition(val.Symbol, makeQuantity(big.NewFloat(val.Amount)), val.TradeBefore)
+					bf.closePosition(val.Symbol, makeQuantity(amt), futures.PositionSideTypeLong)
+				} else {
+					log.Println(val.Symbol + " sellAll SHORT ==================================")
+					printRes(val)
+
+					bf.closePosition(val.Symbol, makeQuantity(amt), futures.PositionSideTypeShort)
+				}
 			}
 
 		}
 		for _, val := range tempPositions {
+			amt := new(big.Float).SetFloat64(val.Amount)
 			exist := false
 			for _, val2 := range positions {
 				if val.Symbol == val2.Symbol {
@@ -107,27 +159,35 @@ func checkDiff(tempPositions []position) {
 				}
 			}
 			if !exist {
-				log.Println(val.Symbol + " created ==================================")
-				printRes(val)
+				if amt.Cmp(new(big.Float).SetFloat64(0)) == 1 {
+					log.Println(val.Symbol + " created LONG ==================================")
+					printRes(val)
 
-				if val.TradeBefore {
-					bf.createFutureShortOrder(val.Symbol, makeQuantity(big.NewFloat(val.Amount)), fmt.Sprintf("%f", val.MarkPrice), "market")
+					bf.createFutureLongOrder(val.Symbol, makeQuantity(amt), fmt.Sprintf("%f", val.MarkPrice), "market")
 
 				} else {
-					bf.createFutureLongOrder(val.Symbol, makeQuantity(big.NewFloat(val.Amount)), fmt.Sprintf("%f", val.MarkPrice), "market")
+					log.Println(val.Symbol + " created SHORT ==================================")
+					printRes(val)
+
+					bf.createFutureShortOrder(val.Symbol, makeQuantity(amt), fmt.Sprintf("%f", val.MarkPrice), "market")
 				}
 			}
 		}
 	} else {
 		for _, val := range tempPositions {
-			log.Println(val.Symbol + " created ==================================")
-			printRes(val)
+			amt := new(big.Float).SetFloat64(val.Amount)
 
-			if val.TradeBefore {
-				bf.createFutureShortOrder(val.Symbol, makeQuantity(big.NewFloat(val.Amount)), fmt.Sprintf("%f", val.MarkPrice), "market")
+			if amt.Cmp(new(big.Float).SetFloat64(0)) == 1 {
+				log.Println(val.Symbol + " created LONG ==================================")
+				printRes(val)
+
+				bf.createFutureLongOrder(val.Symbol, makeQuantity(amt), fmt.Sprintf("%f", val.MarkPrice), "market")
 
 			} else {
-				bf.createFutureLongOrder(val.Symbol, makeQuantity(big.NewFloat(val.Amount)), fmt.Sprintf("%f", val.MarkPrice), "market")
+				log.Println(val.Symbol + " created SHORT ==================================")
+				printRes(val)
+
+				bf.createFutureShortOrder(val.Symbol, makeQuantity(amt), fmt.Sprintf("%f", val.MarkPrice), "market")
 			}
 		}
 	}
@@ -168,7 +228,7 @@ func printRes(position position) {
 }
 
 func makeQuantity(amount *big.Float) string {
-	return fmt.Sprintf("%.3f", new(big.Float).Quo(amount.Add(amount, new(big.Float).SetFloat64(0.0005)), leverage))
+	return fmt.Sprintf("%.3f", new(big.Float).Quo(amount, ratio))
 }
 
 func setEnv() {
