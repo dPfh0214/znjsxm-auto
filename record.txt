@@ -154,3 +154,16 @@ tradeBefore: false
 2022/05/24 08:25:19 createFutureLongOrder:
 2022/05/24 08:25:19 BTCUSDT 0.010 29088.555747 market
 2022/05/24 08:25:19 <APIError> code=-2019, msg=Margin is insufficient.
+2022/05/24 11:17:42 BTCUSDT sellAll LONG ==================================
+2022/05/24 11:17:42 symbol: BTCUSDT
+entryPrice: 29085
+markprice: 29189.81200288
+pnl: 1048.1200288
+roe: 0.10772113
+amount: 10
+updateTimeStamp: 1653348318301
+yellow: true
+tradeBefore: false
+2022/05/24 11:17:42 closePosition:
+2022/05/24 11:17:42 BTCUSDT 0.010 LONG
+2022/05/24 11:17:42 <APIError> code=-2022, msg=ReduceOnly Order is rejected.
