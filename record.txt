@@ -1,0 +1,156 @@
+2022/05/23 00:14:43 BTCUSDT changed SHORT-- ==================================
+2022/05/23 00:14:43 symbol: BTCUSDT
+entryPrice: 29997
+markprice: 29913.40836119
+pnl: 468.1131772
+roe: 0.06986135
+amount: -5.6000000000000005        
+updateTimeStamp: 1653232482370     
+yellow: true
+tradeBefore: false
+2022/05/23 00:14:43 closePosition:
+2022/05/23 00:14:43 BTCUSDT 0.020 LONG
+2022/05/23 00:14:44 <APIError> code=-2022, msg=ReduceOnly Order is rejected.
+2022/05/23 00:18:50 BTCUSDT sellAll SHORT ==================================
+2022/05/23 00:18:50 symbol: BTCUSDT
+entryPrice: 29997
+markprice: 29775.93785298
+pnl: 1237.9480232
+roe: 0.18560469
+amount: -5.6000000000000005
+updateTimeStamp: 1653232482370
+yellow: true
+tradeBefore: false
+2022/05/23 00:18:50 closePosition:
+2022/05/23 00:18:50 BTCUSDT -0.006 SHORT
+2022/05/23 00:18:50 <APIError> code=-1102, msg=Mandatory parameter 'quantity' was not sent, was empty/null, or malformed.
+2022/05/23 04:29:20 BTCUSDT created SHORT ==================================
+2022/05/23 04:29:20 symbol: BTCUSDT
+entryPrice: 29970.1355
+markprice: 29971
+pnl: -17.29
+roe: -0.00072111
+amount: -20
+updateTimeStamp: 1653247759498
+yellow: true
+tradeBefore: false
+2022/05/23 04:29:20 createFutureShortOrder:
+2022/05/23 04:29:20 BTCUSDT -0.020 29971.000000 market
+2022/05/23 04:29:20 <APIError> code=-1102, msg=Mandatory parameter 'quantity' was not sent, was empty/null, or malformed.
+2022/05/23 04:37:48 BTCUSDT sellAll SHORT ==================================
+2022/05/23 04:37:48 symbol: BTCUSDT
+entryPrice: 29970.1355
+markprice: 29986.1
+pnl: -319.28999999999996
+roe: -0.01330992
+amount: -20
+updateTimeStamp: 1653247759498
+yellow: true
+tradeBefore: false
+2022/05/23 04:37:48 closePosition:
+2022/05/23 04:37:48 BTCUSDT -0.020 SHORT
+2022/05/23 04:37:48 <APIError> code=-1102, msg=Mandatory parameter 'quantity' was not sent, was empty/null, or malformed.
+2022/05/23 15:59:46 BTCUSDT created SHORT ==================================
+2022/05/23 15:59:46 symbol: BTCUSDT
+entryPrice: 30480.40691668
+markprice: 30491.04519032
+pnl: -255.31856720000002
+roe: -0.00872246
+amount: -24
+updateTimeStamp: 1653289185645
+yellow: true
+tradeBefore: false
+2022/05/23 15:59:46 createFutureShortOrder:
+2022/05/23 15:59:46 BTCUSDT -0.024 30491.045190 market
+2022/05/23 15:59:47 <APIError> code=-1102, msg=Mandatory parameter 'quantity' was not sent, was empty/null, or malformed.
+2022/05/23 16:30:48 BTCUSDT changed SHORT++ ==================================
+2022/05/23 16:30:48 symbol: BTCUSDT
+entryPrice: 30519.31068182
+markprice: 30574.29074415
+pnl: -2419.1227424
+roe: -0.04495612
+amount: -44
+updateTimeStamp: 1653291046955
+yellow: true
+tradeBefore: false
+2022/05/23 16:30:49 createFutureShortOrder:
+2022/05/23 16:30:49 BTCUSDT 0.020 30572.900000 market
+2022/05/23 16:30:49 <APIError> code=-2022, msg=ReduceOnly Order is rejected.
+2022/05/23 16:43:12 BTCUSDT changed SHORT-- ==================================
+2022/05/23 16:43:12 symbol: BTCUSDT
+entryPrice: 30519.31068182
+markprice: 30515.1
+pnl: 101.0563636
+roe: 0.00344967
+amount: -24
+updateTimeStamp: 1653291790125
+yellow: true
+tradeBefore: false
+2022/05/23 16:43:12 closePosition:
+2022/05/23 16:43:12 BTCUSDT 0.020 LONG
+2022/05/23 16:43:12 <APIError> code=-2022, msg=ReduceOnly Order is rejected.
+2022/05/23 17:16:01 BTCUSDT changed SHORT-- ==================================
+2022/05/23 17:16:01 symbol: BTCUSDT
+entryPrice: 30519.31068182
+markprice: 30412.46611977
+pnl: 427.37824820000003
+roe: 0.08782958
+amount: -4
+updateTimeStamp: 1653293759901
+yellow: true
+tradeBefore: false
+2022/05/23 17:16:01 closePosition:
+2022/05/23 17:16:01 BTCUSDT 0.020 LONG
+2022/05/23 17:16:01 <APIError> code=-2022, msg=ReduceOnly Order is rejected.
+2022/05/23 17:38:41 BTCUSDT sellAll SHORT ==================================
+2022/05/23 17:38:41 symbol: BTCUSDT
+entryPrice: 30519.31068182
+markprice: 30347.4
+pnl: 687.6427272
+roe: 0.14161895
+amount: -4
+updateTimeStamp: 1653293759901
+yellow: true
+tradeBefore: false
+2022/05/23 17:38:41 closePosition:
+2022/05/23 17:38:41 BTCUSDT -0.004 SHORT
+2022/05/23 17:38:41 <APIError> code=-1021, msg=Timestamp for this request was 1000ms ahead of the server's time.
+2022/05/24 05:56:09 BTCUSDT created LONG ==================================
+2022/05/24 05:56:09 symbol: BTCUSDT
+entryPrice: 29267.9
+markprice: 29267.9
+pnl: 0
+roe: 0
+amount: 8
+updateTimeStamp: 1653339368439
+yellow: true
+tradeBefore: false
+2022/05/24 05:56:10 createFutureLongOrder:
+2022/05/24 05:56:10 BTCUSDT 0.008 29267.900000 market
+2022/05/24 05:56:10 <APIError> code=-2019, msg=Margin is insufficient.
+2022/05/24 06:35:15 BTCUSDT sellAll LONG ==================================
+2022/05/24 06:35:15 symbol: BTCUSDT
+entryPrice: 29267.9
+markprice: 29458.27159804
+pnl: 1522.9727842
+roe: 0.19387243
+amount: 8
+updateTimeStamp: 1653339368439
+yellow: true
+tradeBefore: false
+2022/05/24 06:35:15 closePosition:
+2022/05/24 06:35:15 BTCUSDT 0.008 LONG
+2022/05/24 06:35:15 <APIError> code=-2022, msg=ReduceOnly Order is rejected.
+2022/05/24 08:25:19 BTCUSDT created LONG ==================================
+2022/05/24 08:25:19 symbol: BTCUSDT
+entryPrice: 29085
+markprice: 29088.5557469
+pnl: 35.557469
+roe: 0.00366716
+amount: 10
+updateTimeStamp: 1653348318301
+yellow: true
+tradeBefore: false
+2022/05/24 08:25:19 createFutureLongOrder:
+2022/05/24 08:25:19 BTCUSDT 0.010 29088.555747 market
+2022/05/24 08:25:19 <APIError> code=-2019, msg=Margin is insufficient.
