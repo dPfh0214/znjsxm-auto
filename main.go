@@ -223,8 +223,8 @@ func getJson(url string, target interface{}) error {
 	return json.Unmarshal(b, &target)
 }
 
-func printRes(position position) {
-	log.Printf("symbol: %v\nentryPrice: %v\nmarkprice: %v\npnl: %v\nroe: %v\namount: %v\nupdateTimeStamp: %v\nyellow: %v\ntradeBefore: %v\n", position.Symbol, position.EntryPrice, position.MarkPrice, position.Pnl, position.Roe, position.Amount, position.UpdateTimeStamp, position.Yellow, position.TradeBefore)
+func printRes(p position) {
+	log.Printf("symbol: %v\nentryPrice: %v\nmarkprice: %v\npnl: %v\nroe: %v\namount: %v\nupdateTimeStamp: %v\nyellow: %v\ntradeBefore: %v\nleverage: %v\n", p.Symbol, p.EntryPrice, p.MarkPrice, p.Pnl, p.Roe, p.Amount, p.UpdateTimeStamp, p.Yellow, p.TradeBefore, makeLeverage(p))
 }
 
 func makeQuantity(amount *big.Float) string {
