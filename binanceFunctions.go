@@ -20,6 +20,20 @@ var deliveryClient *delivery.Client // Coin-M Futures
 
 type binanceFunction struct{}
 
+func (*binanceFunction) getFutureBalance() (res []*futures.Balance, err error) {
+	res, err = futuresClient.NewGetBalanceService().Do(context.Background())
+
+	if err != nil {
+		log.Println(err)
+		return []*futures.Balance{}, err
+	}
+	for _, val := range res {
+		log.Println(val.Asset)
+		log.Println(val.Balance)
+	}
+	return res, nil
+}
+
 func (*binanceFunction) createBuyOrder(symbol string, quantity string, price string) {
 	log.Println("createBuyOrder:")
 	order, err := client.NewCreateOrderService().Symbol(symbol).
@@ -93,7 +107,7 @@ func (*binanceFunction) getOrderList(symbol string) {
 	}
 }
 
-func (*binanceFunction) setLeverage(symbol string) {
+func (*binanceFunction) setLeverage(symbol string, leverage int) {
 	// log.Println("setLeverage:")
 	_, err := futuresClient.NewChangeLeverageService().Leverage(leverage).Symbol(symbol).Do(context.Background())
 	if err != nil {
@@ -122,8 +136,8 @@ func (*binanceFunction) setPositionMode() {
 	}
 }
 
-func (*binanceFunction) createFutureLongOrder(symbol string, quantity string, price string, orderType string) {
-	bf.setLeverage(symbol)
+func (*binanceFunction) createFutureLongOrder(symbol string, quantity string, price string, orderType string, leverage int) {
+	bf.setLeverage(symbol, leverage)
 	bf.setMarginType(symbol)
 	bf.setPositionMode()
 
@@ -155,8 +169,8 @@ func (*binanceFunction) createFutureLongOrder(symbol string, quantity string, pr
 	log.Println(order)
 }
 
-func (*binanceFunction) createFutureShortOrder(symbol string, quantity string, price string, orderType string) {
-	bf.setLeverage(symbol)
+func (*binanceFunction) createFutureShortOrder(symbol string, quantity string, price string, orderType string, leverage int) {
+	bf.setLeverage(symbol, leverage)
 	bf.setMarginType(symbol)
 	bf.setPositionMode()
 
@@ -187,8 +201,8 @@ func (*binanceFunction) createFutureShortOrder(symbol string, quantity string, p
 	log.Println(order)
 }
 
-func (*binanceFunction) closePosition(symbol string, quantity string, side futures.PositionSideType) {
-	bf.setLeverage(symbol)
+func (*binanceFunction) closePosition(symbol string, quantity string, side futures.PositionSideType, leverage int) {
+	bf.setLeverage(symbol, leverage)
 	bf.setMarginType(symbol)
 	bf.setPositionMode()
 

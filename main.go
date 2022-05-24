@@ -34,7 +34,6 @@ var positions []position
 var bf = new(binanceFunction)
 
 var ratio = big.NewFloat(1000)
-var leverage = 20
 
 func main() {
 	setEnv()
@@ -80,7 +79,7 @@ func checkDiff(tempPositions []position) {
 
 								difference := new(big.Float).Sub(amt2, amt)
 
-								bf.createFutureLongOrder(val.Symbol, makeQuantity(difference), fmt.Sprintf("%f", val.MarkPrice), "market")
+								bf.createFutureLongOrder(val.Symbol, makeQuantity(difference), fmt.Sprintf("%f", val.MarkPrice), "market", makeLeverage(val))
 
 							} else if amt.Cmp(amt2) == 1 {
 								log.Println(val.Symbol + " changed LONG-- ==================================")
@@ -88,19 +87,19 @@ func checkDiff(tempPositions []position) {
 
 								difference := new(big.Float).Sub(amt, amt2)
 
-								bf.closePosition(val.Symbol, makeQuantity(difference), futures.PositionSideTypeLong)
+								bf.closePosition(val.Symbol, makeQuantity(difference), futures.PositionSideTypeLong, makeLeverage(val))
 							}
 
 						} else {
 							log.Println(val.Symbol + " sellAll LONG ==================================")
 							printRes(val)
 
-							bf.closePosition(val.Symbol, makeQuantity(amt), futures.PositionSideTypeLong)
+							bf.closePosition(val.Symbol, makeQuantity(amt), futures.PositionSideTypeLong, makeLeverage(val))
 
 							log.Println(val.Symbol + " created SHORT ==================================")
 							printRes(val2)
 
-							bf.createFutureShortOrder(val.Symbol, makeQuantity(amt2), fmt.Sprintf("%f", val.MarkPrice), "market")
+							bf.createFutureShortOrder(val.Symbol, makeQuantity(amt2), fmt.Sprintf("%f", val.MarkPrice), "market", makeLeverage(val))
 						}
 					} else {
 						if amt2.Cmp(new(big.Float).SetFloat64(0)) == -1 {
@@ -110,7 +109,7 @@ func checkDiff(tempPositions []position) {
 
 								difference := new(big.Float).Sub(amt2.Abs(amt2), amt.Abs(amt))
 
-								bf.createFutureShortOrder(val.Symbol, makeQuantity(difference), fmt.Sprintf("%f", val.MarkPrice), "market")
+								bf.createFutureShortOrder(val.Symbol, makeQuantity(difference), fmt.Sprintf("%f", val.MarkPrice), "market", makeLeverage(val))
 
 							} else if amt.Cmp(amt2) == -1 {
 								log.Println(val.Symbol + " changed SHORT-- ==================================")
@@ -118,19 +117,19 @@ func checkDiff(tempPositions []position) {
 
 								difference := new(big.Float).Sub(amt.Abs(amt), amt2.Abs(amt2))
 
-								bf.closePosition(val.Symbol, makeQuantity(difference), futures.PositionSideTypeLong)
+								bf.closePosition(val.Symbol, makeQuantity(difference), futures.PositionSideTypeLong, makeLeverage(val))
 							}
 
 						} else {
 							log.Println(val.Symbol + " sellAll SHORT ==================================")
 							printRes(val)
 
-							bf.closePosition(val.Symbol, makeQuantity(amt), futures.PositionSideTypeShort)
+							bf.closePosition(val.Symbol, makeQuantity(amt), futures.PositionSideTypeShort, makeLeverage(val))
 
 							log.Println(val.Symbol + " created LONG ==================================")
 							printRes(val2)
 
-							bf.createFutureLongOrder(val.Symbol, makeQuantity(amt2), fmt.Sprintf("%f", val.MarkPrice), "market")
+							bf.createFutureLongOrder(val.Symbol, makeQuantity(amt2), fmt.Sprintf("%f", val.MarkPrice), "market", makeLeverage(val))
 						}
 					}
 				}
@@ -140,12 +139,12 @@ func checkDiff(tempPositions []position) {
 					log.Println(val.Symbol + " sellAll LONG ==================================")
 					printRes(val)
 
-					bf.closePosition(val.Symbol, makeQuantity(amt), futures.PositionSideTypeLong)
+					bf.closePosition(val.Symbol, makeQuantity(amt), futures.PositionSideTypeLong, makeLeverage(val))
 				} else {
 					log.Println(val.Symbol + " sellAll SHORT ==================================")
 					printRes(val)
 
-					bf.closePosition(val.Symbol, makeQuantity(amt), futures.PositionSideTypeShort)
+					bf.closePosition(val.Symbol, makeQuantity(amt), futures.PositionSideTypeShort, makeLeverage(val))
 				}
 			}
 
@@ -163,13 +162,13 @@ func checkDiff(tempPositions []position) {
 					log.Println(val.Symbol + " created LONG ==================================")
 					printRes(val)
 
-					bf.createFutureLongOrder(val.Symbol, makeQuantity(amt), fmt.Sprintf("%f", val.MarkPrice), "market")
+					bf.createFutureLongOrder(val.Symbol, makeQuantity(amt), fmt.Sprintf("%f", val.MarkPrice), "market", makeLeverage(val))
 
 				} else {
 					log.Println(val.Symbol + " created SHORT ==================================")
 					printRes(val)
 
-					bf.createFutureShortOrder(val.Symbol, makeQuantity(amt), fmt.Sprintf("%f", val.MarkPrice), "market")
+					bf.createFutureShortOrder(val.Symbol, makeQuantity(amt), fmt.Sprintf("%f", val.MarkPrice), "market", makeLeverage(val))
 				}
 			}
 		}
@@ -181,13 +180,13 @@ func checkDiff(tempPositions []position) {
 				log.Println(val.Symbol + " created LONG ==================================")
 				printRes(val)
 
-				bf.createFutureLongOrder(val.Symbol, makeQuantity(amt), fmt.Sprintf("%f", val.MarkPrice), "market")
+				bf.createFutureLongOrder(val.Symbol, makeQuantity(amt), fmt.Sprintf("%f", val.MarkPrice), "market", makeLeverage(val))
 
 			} else {
 				log.Println(val.Symbol + " created SHORT ==================================")
 				printRes(val)
 
-				bf.createFutureShortOrder(val.Symbol, makeQuantity(amt), fmt.Sprintf("%f", val.MarkPrice), "market")
+				bf.createFutureShortOrder(val.Symbol, makeQuantity(amt), fmt.Sprintf("%f", val.MarkPrice), "market", makeLeverage(val))
 			}
 		}
 	}
@@ -230,6 +229,19 @@ func printRes(position position) {
 
 func makeQuantity(amount *big.Float) string {
 	return fmt.Sprintf("%.3f", new(big.Float).Quo(amount, ratio))
+}
+
+func makeLeverage(p position) (leverage int) {
+	ep := new(big.Float).SetFloat64(p.EntryPrice)
+	a := new(big.Float).SetFloat64(p.Amount)
+	roe := new(big.Float).SetFloat64(p.Roe)
+	pnl := new(big.Float).SetFloat64(p.Pnl)
+	leverageStr := fmt.Sprintf("%.0f", new(big.Float).Quo(new(big.Float).Mul(ep, a.Abs(a)), new(big.Float).Mul(new(big.Float).Quo(new(big.Float).SetInt(big.NewInt(1)), roe), pnl)))
+	leverage, _ = strconv.Atoi(leverageStr)
+	if leverage > 20 {
+		leverage = 20
+	}
+	return leverage
 }
 
 func setEnv() {
