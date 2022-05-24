@@ -33,7 +33,7 @@ var defaultClient = &http.Client{Timeout: 10 * time.Second}
 var positions []position
 var bf = new(binanceFunction)
 
-var ratio = big.NewFloat(200)
+var ratio = big.NewFloat(1000)
 var leverage = 20
 
 func main() {
@@ -57,7 +57,7 @@ func startBot() {
 			continue
 		}
 		checkDiff(tempPositions)
-		time.Sleep(time.Second * 1)
+		time.Sleep(time.Millisecond * 500)
 	}
 }
 
@@ -215,6 +215,7 @@ func getJson(url string, target interface{}) error {
 		return err
 	}
 	defer res.Body.Close()
+
 	b, err := io.ReadAll(res.Body)
 	if err != nil {
 		return err
