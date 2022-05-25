@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -245,6 +246,7 @@ func makeLeverage(p position) (leverage int) {
 }
 
 func setEnv() {
+	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 	err := godotenv.Load(".env")
 
 	if err != nil {
