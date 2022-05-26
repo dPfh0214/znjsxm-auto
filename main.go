@@ -34,7 +34,7 @@ var defaultClient = &http.Client{Timeout: 10 * time.Second}
 var positions []position
 var bf = new(binanceFunction)
 
-var ratio = big.NewFloat(1000)
+var ratio = big.NewFloat(200)
 
 func main() {
 	setEnv()

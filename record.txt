@@ -167,3 +167,311 @@ tradeBefore: false
 2022/05/24 11:17:42 closePosition:
 2022/05/24 11:17:42 BTCUSDT 0.010 LONG
 2022/05/24 11:17:42 <APIError> code=-2022, msg=ReduceOnly Order is rejected.
+2022/05/26 19:12:48 BTCUSDT created LONG ==================================
+2022/05/26 19:12:48 symbol: BTCUSDT
+entryPrice: 29219.9482
+markprice: 29220.942974
+pnl: 9.94774
+roe: 0.0010213
+amount: 10
+updateTimeStamp: 1653559968055
+yellow: true
+tradeBefore: false
+leverage: 20
+2022/05/26 19:12:48 createFutureLongOrder:
+2022/05/26 19:12:48 BTCUSDT 0.050 29220.942974 market
+2022/05/26 19:12:48 &{BTCUSDT 55437729094 uGtG63QZ3UlM5MZXnXILHB 0 0.050 0 0 false NEW 0 GTC MARKET BUY 1653559968317 CONTRACT_PRICE   0.00000 LONG false false 0 1}
+2022/05/26 19:38:29 BTCUSDT changed LONG++ ==================================
+2022/05/26 19:38:29 symbol: BTCUSDT
+entryPrice: 29211.0735
+markprice: 29161.35827603
+pnl: -596.5826876
+roe: -0.05114496
+amount: 12
+updateTimeStamp: 1653561509681
+yellow: true
+tradeBefore: false
+leverage: 20
+2022/05/26 19:38:30 createFutureLongOrder:
+2022/05/26 19:38:30 BTCUSDT 0.010 29161.358276 market
+2022/05/26 19:38:30 &{BTCUSDT 55439744640 Zz5YFGGWOmqFXkZAGFt1xp 0 0.010 0 0 false NEW 0 GTC MARKET BUY 1653561510126 CONTRACT_PRICE   0.00000 LONG false false 0 1}
+2022/05/26 20:13:26 BTCUSDT changed LONG++ ==================================
+2022/05/26 20:13:26 symbol: BTCUSDT
+entryPrice: 29134.21987499
+markprice: 29079.82825884
+pnl: -1740.5317168
+roe: -0.05611272
+amount: 32
+updateTimeStamp: 1653563605897
+yellow: true
+tradeBefore: false
+leverage: 20
+2022/05/26 20:13:26 createFutureLongOrder:
+2022/05/26 20:13:26 BTCUSDT 0.100 29079.828259 market
+2022/05/26 20:13:26 <APIError> code=-2019, msg=Margin is insufficient.
+2022/05/26 20:26:24 BTCUSDT changed LONG++ ==================================
+2022/05/26 20:26:24 symbol: BTCUSDT
+entryPrice: 29119.7359
+markprice: 29064.2
+pnl: -2221.4359999999997
+roe: -0.05732402
+amount: 40
+updateTimeStamp: 1653564383963
+yellow: true
+tradeBefore: false
+leverage: 20
+2022/05/26 20:26:24 createFutureLongOrder:
+2022/05/26 20:26:24 BTCUSDT 0.040 29064.026369 market
+2022/05/26 20:26:24 &{BTCUSDT 55444563022 wZcu0z73Z2vuQinlhqLPLy 0 0.040 0 0 false NEW 0 GTC MARKET BUY 1653564384531 CONTRACT_PRICE   0.00000 LONG false false 0 1}
+2022/05/26 20:29:55 BTCUSDT changed LONG-- ==================================
+2022/05/26 20:29:55 symbol: BTCUSDT
+entryPrice: 29119.7359
+markprice: 29113.7
+pnl: -193.1488
+roe: -0.00621965
+amount: 32
+updateTimeStamp: 1653564595106
+yellow: true
+tradeBefore: false
+leverage: 20
+2022/05/26 20:29:55 closePosition:
+2022/05/26 20:29:55 BTCUSDT 0.040 LONG
+2022/05/26 20:29:55 &{BTCUSDT 55444936947 QRk69ZNITge7wJvoBtbkqD 0 0.040 0 0 true NEW 0 GTC MARKET SELL 1653564595746 CONTRACT_PRICE   0.00000 LONG false false 0 1}
+2022/05/26 20:29:56 BTCUSDT changed LONG-- ==================================
+2022/05/26 20:29:56 symbol: BTCUSDT
+entryPrice: 29119.7359
+markprice: 29126.6
+pnl: 109.8256
+roe: 0.00706993
+amount: 16
+updateTimeStamp: 1653564595563
+yellow: true
+tradeBefore: false
+leverage: 20
+2022/05/26 20:29:56 closePosition:
+2022/05/26 20:29:56 BTCUSDT 0.080 LONG
+2022/05/26 20:29:56 &{BTCUSDT 55444939975 BGG2vekGHB4k2JvH0GSjru 0 0.060 0 0 true NEW 0 GTC MARKET SELL 1653564596496 CONTRACT_PRICE   0.00000 LONG false false 1 2}
+2022/05/26 20:32:55 BTCUSDT changed LONG++ ==================================
+2022/05/26 20:32:55 symbol: BTCUSDT
+entryPrice: 29114.20968889
+markprice: 29067.9
+pnl: -833.5744
+roe: -0.04779466
+amount: 18
+updateTimeStamp: 1653564774527
+yellow: true
+tradeBefore: false
+leverage: 20
+2022/05/26 20:32:55 createFutureLongOrder:
+2022/05/26 20:32:55 BTCUSDT 0.010 29067.900000 market
+2022/05/26 20:32:55 &{BTCUSDT 55445299071 QYgDMgkK0Rp9Zhr8KQ2uCh 0 0.010 0 0 false NEW 0 GTC MARKET BUY 1653564775239 CONTRACT_PRICE   0.00000 LONG false false 0 1}
+2022/05/26 20:40:54 BTCUSDT changed LONG-- ==================================
+2022/05/26 20:40:54 symbol: BTCUSDT
+entryPrice: 29114.20968889
+markprice: 29115
+pnl: 12.6449776
+roe: 0.00081433
+amount: 16
+updateTimeStamp: 1653565253825
+yellow: true
+tradeBefore: false
+leverage: 20
+2022/05/26 20:40:54 closePosition:
+2022/05/26 20:40:54 BTCUSDT 0.010 LONG
+2022/05/26 20:40:54 &{BTCUSDT 55446058881 K2w7XPMOKt7tSZmeP5aGFn 0 0.010 0 0 true NEW 0 GTC MARKET SELL 1653565254650 CONTRACT_PRICE   0.00000 LONG false false 0 1}
+2022/05/26 20:46:01 BTCUSDT changed LONG++ ==================================
+2022/05/26 20:46:01 symbol: BTCUSDT
+entryPrice: 29100.05211624
+markprice: 29077.4
+pnl: -588.9550222
+roe: -0.02337084
+amount: 26
+updateTimeStamp: 1653565561117
+yellow: true
+tradeBefore: false
+leverage: 20
+2022/05/26 20:46:01 createFutureLongOrder:
+2022/05/26 20:46:01 BTCUSDT 0.050 29077.400000 market
+2022/05/26 20:46:01 &{BTCUSDT 55446600754 K8MFoUdA8O1L2p7vu5LDhl 0 0.050 0 0 false NEW 0 GTC MARKET BUY 1653565561739 CONTRACT_PRICE   0.00000 LONG false false 0 1}
+2022/05/26 20:55:37 BTCUSDT changed LONG++ ==================================
+2022/05/26 20:55:37 symbol: BTCUSDT
+entryPrice: 29086.27183407
+markprice: 29004.2384234
+pnl: -2461.00232
+roe: -0.08484973
+amount: 30
+updateTimeStamp: 1653566137512
+yellow: true
+tradeBefore: false
+leverage: 20
+2022/05/26 20:55:38 createFutureLongOrder:
+2022/05/26 20:55:38 BTCUSDT 0.020 29004.238423 market
+2022/05/26 20:55:38 &{BTCUSDT 55447566281 xRdkmUqBQx15PB2N2b93d0 0 0.020 0 0 false NEW 0 GTC MARKET BUY 1653566138020 CONTRACT_PRICE   0.00000 LONG false false 0 1}
+2022/05/26 21:10:12 BTCUSDT changed LONG++ ==================================
+2022/05/26 21:10:12 symbol: BTCUSDT
+entryPrice: 29050.82887555
+markprice: 28950
+pnl: -4033.1550220000004
+roe: -0.10448586
+amount: 40
+updateTimeStamp: 1653567012481
+yellow: true
+tradeBefore: false
+leverage: 20
+2022/05/26 21:10:13 createFutureLongOrder:
+2022/05/26 21:10:13 BTCUSDT 0.050 28950.000000 market
+2022/05/26 21:10:13 <APIError> code=-2019, msg=Margin is insufficient.
+2022/05/26 21:11:22 BTCUSDT changed LONG-- ==================================
+2022/05/26 21:11:22 symbol: BTCUSDT
+entryPrice: 29050.82887555
+markprice: 29029.2
+pnl: -648.8662664000001
+roe: -0.02235219
+amount: 30
+updateTimeStamp: 1653567082306
+yellow: true
+tradeBefore: false
+leverage: 20
+2022/05/26 21:11:23 closePosition:
+2022/05/26 21:11:23 BTCUSDT 0.050 LONG
+2022/05/26 21:11:23 &{BTCUSDT 55449302180 NbDH4OdjoujnfJl9TdoXu0 0 0.050 0 0 true NEW 0 GTC MARKET SELL 1653567083029 CONTRACT_PRICE   0.00000 LONG false false 0 1}
+2022/05/26 21:32:04 BTCUSDT changed LONG++ ==================================
+2022/05/26 21:32:04 symbol: BTCUSDT
+entryPrice: 29010.69696061
+markprice: 28924.7
+pnl: -3783.8662668
+roe: -0.08919395
+amount: 44
+updateTimeStamp: 1653568324057
+yellow: true
+tradeBefore: false
+leverage: 20
+2022/05/26 21:32:04 createFutureLongOrder:
+2022/05/26 21:32:04 BTCUSDT 0.070 28917.300000 market
+2022/05/26 21:32:04 &{BTCUSDT 55451711787 eS13RaxDEf7z768apG78OB 0 0.070 0 0 false NEW 0 GTC MARKET BUY 1653568324821 CONTRACT_PRICE   0.00000 LONG false false 0 1}
+2022/05/26 21:41:47 BTCUSDT changed LONG++ ==================================
+2022/05/26 21:41:47 symbol: BTCUSDT
+entryPrice: 28966.4770046
+markprice: 28828.2
+pnl: -8020.0662667999995
+roe: -0.14389762
+amount: 58
+updateTimeStamp: 1653568907120
+yellow: true
+tradeBefore: false
+leverage: 20
+2022/05/26 21:41:47 createFutureLongOrder:
+2022/05/26 21:41:47 BTCUSDT 0.070 28826.700000 market
+2022/05/26 21:41:47 <APIError> code=-2019, msg=Margin is insufficient.
+2022/05/26 21:55:15 BTCUSDT changed LONG-- ==================================
+2022/05/26 21:55:15 symbol: BTCUSDT
+entryPrice: 28966.4770046
+markprice: 28960
+pnl: -194.310138
+roe: -0.0067096
+amount: 30
+updateTimeStamp: 1653569715274
+yellow: true
+tradeBefore: false
+leverage: 20
+2022/05/26 21:55:16 closePosition:
+2022/05/26 21:55:16 BTCUSDT 0.140 LONG
+2022/05/26 21:55:16 &{BTCUSDT 55454728754 9U2TUK1P8T1iillQ6FQfUa 0 0.090 0 0 true NEW 0 GTC MARKET SELL 1653569715961 CONTRACT_PRICE   0.00000 LONG false false 0 1}
+2022/05/26 22:10:34 BTCUSDT changed LONG++ ==================================
+2022/05/26 22:10:34 symbol: BTCUSDT
+entryPrice: 28928.05775345
+markprice: 28811.9
+pnl: -4646.310138
+roe: -0.12094766
+amount: 40
+updateTimeStamp: 1653570634125
+yellow: true
+tradeBefore: false
+leverage: 20
+2022/05/26 22:10:34 createFutureLongOrder:
+2022/05/26 22:10:34 BTCUSDT 0.050 28809.600000 market
+2022/05/26 22:10:34 &{BTCUSDT 55456475235 3cIozMR8bwYzwBrtkJo2mX 0 0.050 0 0 false NEW 0 GTC MARKET BUY 1653570634400 CONTRACT_PRICE   0.00000 LONG false false 0 1}
+2022/05/26 22:15:22 BTCUSDT changed LONG++ ==================================
+2022/05/26 22:15:22 symbol: BTCUSDT
+entryPrice: 28895.84620276
+markprice: 28767
+pnl: -6442.310138000001
+roe: -0.13436873
+amount: 50
+updateTimeStamp: 1653570921609
+yellow: true
+tradeBefore: false
+leverage: 20
+2022/05/26 22:15:22 createFutureLongOrder:
+2022/05/26 22:15:22 BTCUSDT 0.050 28767.000000 market
+2022/05/26 22:15:22 &{BTCUSDT 55457240572 PW1W9eYPEdqKmcIVqiaeOR 0 0.050 0 0 false NEW 0 GTC MARKET BUY 1653570922260 CONTRACT_PRICE   0.00000 LONG false false 0 1}
+2022/05/26 22:49:50 BTCUSDT changed LONG-- ==================================
+2022/05/26 22:49:50 symbol: BTCUSDT
+entryPrice: 28895.84620276
+markprice: 28879.0887196
+pnl: -335.14966319999996
+roe: -0.02901318
+amount: 20
+updateTimeStamp: 1653572989989
+yellow: true
+tradeBefore: false
+leverage: 20
+2022/05/26 22:49:51 closePosition:
+2022/05/26 22:49:51 BTCUSDT 0.150 LONG
+2022/05/26 22:49:52 &{BTCUSDT 55463174340 84k9ywLFdrTN4sqHJBAwf3 0 0.100 0 0 true NEW 0 GTC MARKET SELL 1653572991781 CONTRACT_PRICE   0.00000 LONG false false 0 1}
+2022/05/26 22:56:14 BTCUSDT changed LONG++ ==================================
+2022/05/26 22:56:14 symbol: BTCUSDT
+entryPrice: 28858.23080184
+markprice: 28758.1
+pnl: -3003.9240552
+roe: -0.10445487
+amount: 30
+updateTimeStamp: 1653573373873
+yellow: true
+tradeBefore: false
+leverage: 20
+2022/05/26 22:56:14 createFutureLongOrder:
+2022/05/26 22:56:14 BTCUSDT 0.050 28758.100000 market
+2022/05/26 22:56:14 &{BTCUSDT 55464385420 tVtatcshe8aSpNQnVV4gZR 0 0.050 0 0 false NEW 0 GTC MARKET BUY 1653573374148 CONTRACT_PRICE   0.00000 LONG false false 0 1}
+2022/05/26 23:01:14 BTCUSDT changed LONG-- ==================================
+2022/05/26 23:01:14 symbol: BTCUSDT
+entryPrice: 28858.23080184
+markprice: 28946
+pnl: 1755.3839632
+roe: 0.09096509
+amount: 20
+updateTimeStamp: 1653573674610
+yellow: true
+tradeBefore: false
+leverage: 20
+2022/05/26 23:01:15 closePosition:
+2022/05/26 23:01:15 BTCUSDT 0.050 LONG
+2022/05/26 23:01:15 &{BTCUSDT 55465239674 87c4lrq21gJm2b8r6r6YZN 0 0.050 0 0 true NEW 0 GTC MARKET SELL 1653573675474 CONTRACT_PRICE   0.00000 LONG false false 0 1}
+2022/05/26 23:07:16 BTCUSDT changed LONG-- ==================================
+2022/05/26 23:07:16 symbol: BTCUSDT
+entryPrice: 28858.23080184
+markprice: 29210.93904327
+pnl: 2821.6659314
+roe: 0.36223571
+amount: 8
+updateTimeStamp: 1653574035681
+yellow: true
+tradeBefore: false
+leverage: 20
+2022/05/26 23:07:18 closePosition:
+2022/05/26 23:07:18 BTCUSDT 0.060 LONG
+2022/05/26 23:07:18 <APIError> code=-2022, msg=ReduceOnly Order is rejected.
+2022/05/26 23:10:35 BTCUSDT changed LONG++ ==================================
+2022/05/26 23:10:35 symbol: BTCUSDT
+entryPrice: 28925.78720123
+markprice: 29066.67400996
+pnl: 1690.6417046000001
+roe: 0.14541063
+amount: 12
+updateTimeStamp: 1653574235133
+yellow: true
+tradeBefore: false
+leverage: 20
+2022/05/26 23:10:36 createFutureLongOrder:
+2022/05/26 23:10:36 BTCUSDT 0.020 29069.092417 market
+2022/05/26 23:10:36 &{BTCUSDT 55466954355 4BJTSnFS0MXOCvHdNgiTw8 0 0.020 0 0 false NEW 0 GTC MARKET BUY 1653574236223 CONTRACT_PRICE   0.00000 LONG false false 0 1}
