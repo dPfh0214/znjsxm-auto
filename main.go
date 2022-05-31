@@ -56,14 +56,19 @@ func startBot() {
 			log.Println(err)
 			continue
 		}
+		// tempPositions = append(tempPositions, position{Symbol: "BTCUSDT", EntryPrice: 31767.7, Pnl: -0, Roe: -0, Amount: -14})
 		checkDiff(tempPositions)
-		time.Sleep(time.Millisecond * 500)
+		time.Sleep(time.Millisecond * 1000)
 	}
 }
 
 func checkDiff(tempPositions []position) {
 	if len(positions) > 0 {
 		for _, val := range positions {
+			leverage := makeLeverage(val)
+			if leverage == -1 {
+				return
+			}
 			amt := new(big.Float).SetFloat64(val.Amount)
 			sellAll := true
 			for _, val2 := range tempPositions {
@@ -80,7 +85,7 @@ func checkDiff(tempPositions []position) {
 
 								difference := new(big.Float).Sub(amt2, amt)
 
-								bf.createFutureLongOrder(val.Symbol, makeQuantity(difference), fmt.Sprintf("%f", val.MarkPrice), "market", makeLeverage(val))
+								bf.createFutureLongOrder(val.Symbol, makeQuantity(difference), fmt.Sprintf("%f", val.MarkPrice), "market", leverage)
 
 							} else if amt.Cmp(amt2) == 1 {
 								log.Println(val.Symbol + " changed LONG-- ==================================")
@@ -88,19 +93,19 @@ func checkDiff(tempPositions []position) {
 
 								difference := new(big.Float).Sub(amt, amt2)
 
-								bf.closePosition(val.Symbol, makeQuantity(difference), futures.PositionSideTypeLong, makeLeverage(val))
+								bf.closePosition(val.Symbol, makeQuantity(difference), futures.PositionSideTypeLong, leverage)
 							}
 
 						} else {
 							log.Println(val.Symbol + " sellAll LONG ==================================")
 							printRes(val)
 
-							bf.closePosition(val.Symbol, makeQuantity(amt), futures.PositionSideTypeLong, makeLeverage(val))
+							bf.closePosition(val.Symbol, makeQuantity(amt), futures.PositionSideTypeLong, leverage)
 
 							log.Println(val.Symbol + " created SHORT ==================================")
 							printRes(val2)
 
-							bf.createFutureShortOrder(val.Symbol, makeQuantity(amt2), fmt.Sprintf("%f", val.MarkPrice), "market", makeLeverage(val))
+							bf.createFutureShortOrder(val.Symbol, makeQuantity(amt2), fmt.Sprintf("%f", val.MarkPrice), "market", leverage)
 						}
 					} else {
 						if amt2.Cmp(new(big.Float).SetFloat64(0)) == -1 {
@@ -110,7 +115,7 @@ func checkDiff(tempPositions []position) {
 
 								difference := new(big.Float).Sub(amt2.Abs(amt2), amt.Abs(amt))
 
-								bf.createFutureShortOrder(val.Symbol, makeQuantity(difference), fmt.Sprintf("%f", val.MarkPrice), "market", makeLeverage(val))
+								bf.createFutureShortOrder(val.Symbol, makeQuantity(difference), fmt.Sprintf("%f", val.MarkPrice), "market", leverage)
 
 							} else if amt.Cmp(amt2) == -1 {
 								log.Println(val.Symbol + " changed SHORT-- ==================================")
@@ -118,19 +123,19 @@ func checkDiff(tempPositions []position) {
 
 								difference := new(big.Float).Sub(amt.Abs(amt), amt2.Abs(amt2))
 
-								bf.closePosition(val.Symbol, makeQuantity(difference), futures.PositionSideTypeLong, makeLeverage(val))
+								bf.closePosition(val.Symbol, makeQuantity(difference), futures.PositionSideTypeLong, leverage)
 							}
 
 						} else {
 							log.Println(val.Symbol + " sellAll SHORT ==================================")
 							printRes(val)
 
-							bf.closePosition(val.Symbol, makeQuantity(amt), futures.PositionSideTypeShort, makeLeverage(val))
+							bf.closePosition(val.Symbol, makeQuantity(amt), futures.PositionSideTypeShort, leverage)
 
 							log.Println(val.Symbol + " created LONG ==================================")
 							printRes(val2)
 
-							bf.createFutureLongOrder(val.Symbol, makeQuantity(amt2), fmt.Sprintf("%f", val.MarkPrice), "market", makeLeverage(val))
+							bf.createFutureLongOrder(val.Symbol, makeQuantity(amt2), fmt.Sprintf("%f", val.MarkPrice), "market", leverage)
 						}
 					}
 				}
@@ -140,18 +145,23 @@ func checkDiff(tempPositions []position) {
 					log.Println(val.Symbol + " sellAll LONG ==================================")
 					printRes(val)
 
-					bf.closePosition(val.Symbol, makeQuantity(amt), futures.PositionSideTypeLong, makeLeverage(val))
+					bf.closePosition(val.Symbol, makeQuantity(amt), futures.PositionSideTypeLong, leverage)
 				} else {
 					log.Println(val.Symbol + " sellAll SHORT ==================================")
 					printRes(val)
 
-					bf.closePosition(val.Symbol, makeQuantity(amt), futures.PositionSideTypeShort, makeLeverage(val))
+					bf.closePosition(val.Symbol, makeQuantity(amt), futures.PositionSideTypeShort, leverage)
 				}
 			}
 
 		}
 		for _, val := range tempPositions {
+			leverage := makeLeverage(val)
+			if leverage == -1 {
+				return
+			}
 			amt := new(big.Float).SetFloat64(val.Amount)
+
 			exist := false
 			for _, val2 := range positions {
 				if val.Symbol == val2.Symbol {
@@ -163,31 +173,35 @@ func checkDiff(tempPositions []position) {
 					log.Println(val.Symbol + " created LONG ==================================")
 					printRes(val)
 
-					bf.createFutureLongOrder(val.Symbol, makeQuantity(amt), fmt.Sprintf("%f", val.MarkPrice), "market", makeLeverage(val))
+					bf.createFutureLongOrder(val.Symbol, makeQuantity(amt), fmt.Sprintf("%f", val.MarkPrice), "market", leverage)
 
 				} else {
 					log.Println(val.Symbol + " created SHORT ==================================")
 					printRes(val)
 
-					bf.createFutureShortOrder(val.Symbol, makeQuantity(amt), fmt.Sprintf("%f", val.MarkPrice), "market", makeLeverage(val))
+					bf.createFutureShortOrder(val.Symbol, makeQuantity(amt), fmt.Sprintf("%f", val.MarkPrice), "market", leverage)
 				}
 			}
 		}
 	} else {
 		for _, val := range tempPositions {
+			leverage := makeLeverage(val)
+			if leverage == -1 {
+				return
+			}
 			amt := new(big.Float).SetFloat64(val.Amount)
 
 			if amt.Cmp(new(big.Float).SetFloat64(0)) == 1 {
 				log.Println(val.Symbol + " created LONG ==================================")
 				printRes(val)
 
-				bf.createFutureLongOrder(val.Symbol, makeQuantity(amt), fmt.Sprintf("%f", val.MarkPrice), "market", makeLeverage(val))
+				bf.createFutureLongOrder(val.Symbol, makeQuantity(amt), fmt.Sprintf("%f", val.MarkPrice), "market", leverage)
 
 			} else {
 				log.Println(val.Symbol + " created SHORT ==================================")
 				printRes(val)
 
-				bf.createFutureShortOrder(val.Symbol, makeQuantity(amt), fmt.Sprintf("%f", val.MarkPrice), "market", makeLeverage(val))
+				bf.createFutureShortOrder(val.Symbol, makeQuantity(amt), fmt.Sprintf("%f", val.MarkPrice), "market", leverage)
 			}
 		}
 	}
@@ -229,14 +243,18 @@ func printRes(p position) {
 }
 
 func makeQuantity(amount *big.Float) string {
-	return fmt.Sprintf("%.3f", new(big.Float).Quo(amount, ratio))
+	return fmt.Sprintf("%.3f", new(big.Float).Quo(amount.Abs(amount), ratio))
 }
 
 func makeLeverage(p position) (leverage int) {
+	if p.Roe == 0 || p.Pnl == 0 {
+		return -1
+	}
 	ep := new(big.Float).SetFloat64(p.EntryPrice)
 	a := new(big.Float).SetFloat64(p.Amount)
 	roe := new(big.Float).SetFloat64(p.Roe)
 	pnl := new(big.Float).SetFloat64(p.Pnl)
+
 	leverageStr := fmt.Sprintf("%.0f", new(big.Float).Quo(new(big.Float).Mul(ep, a.Abs(a)), new(big.Float).Mul(new(big.Float).Quo(new(big.Float).SetInt(big.NewInt(1)), roe), pnl)))
 	leverage, _ = strconv.Atoi(leverageStr)
 	if leverage > 20 {

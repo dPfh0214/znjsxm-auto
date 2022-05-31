@@ -111,7 +111,7 @@ func (*binanceFunction) setLeverage(symbol string, leverage int) {
 	// log.Println("setLeverage:")
 	_, err := futuresClient.NewChangeLeverageService().Leverage(leverage).Symbol(symbol).Do(context.Background())
 	if err != nil {
-		// log.Println(err)
+		log.Println(err)
 		return
 	}
 	// log.Println(leverage)
