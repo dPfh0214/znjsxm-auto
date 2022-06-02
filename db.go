@@ -22,7 +22,6 @@ func setDb() {
 		dbHost, dbPort, dbUser, dbPassword, dbName)
 
 	db, _ = sql.Open("postgres", psqlInfo)
-	defer db.Close()
 
 	err := db.Ping()
 	if err != nil {
