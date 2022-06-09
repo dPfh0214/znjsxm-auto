@@ -29,7 +29,8 @@ type position struct {
 	UpdateTimeStamp int     `json:"updateTimeStamp"`
 	Yellow          bool    `json:"yellow"`
 	TradeBefore     bool    `json:"tradeBefore"`
-	Leverage        bool
+	Leverage        int
+	Profit          float64
 }
 
 var defaultClient = &http.Client{Timeout: 10 * time.Second}
@@ -37,6 +38,7 @@ var positions []position
 var bf = new(binanceFunction)
 
 var ratio = big.NewFloat(200)
+var leverage = 15
 
 func main() {
 	setEnv()
@@ -60,7 +62,7 @@ func startBot() {
 			continue
 		}
 
-		tempPositions = append(tempPositions, position{Symbol: "BTCUSDT", EntryPrice: 28925.78720123, MarkPrice: 29513.16189206, Pnl: 3524.2481448, Roe: 5.9706369, Amount: 6, UpdateTimeStamp: 1653590087394, Yellow: true, TradeBefore: false})
+		// tempPositions = append(tempPositions, position{Symbol: "BTCUSDT", EntryPrice: 28925.78720123, MarkPrice: 29513.16189206, Pnl: 3524.2481448, Roe: 5.9706369, Amount: 6, UpdateTimeStamp: 1653590087394, Yellow: true, TradeBefore: false})
 		checkDiff(tempPositions)
 		time.Sleep(time.Millisecond * 1000)
 	}
@@ -86,18 +88,19 @@ func checkDiff(tempPositions []position) {
 							if amt.Cmp(amt2) == -1 {
 								log.Println(val.Symbol + " changed LONG++ ==================================")
 								printRes(val2)
-								makeRecord(val, "open", "long")
-
 								difference := new(big.Float).Sub(amt2, amt)
+								makeRecord(val, "open", "long")
 
 								bf.createFutureLongOrder(val.Symbol, makeQuantity(difference), fmt.Sprintf("%f", val.MarkPrice), "market", leverage)
 
 							} else if amt.Cmp(amt2) == 1 {
 								log.Println(val.Symbol + " changed LONG-- ==================================")
 								printRes(val2)
-								makeRecord(val, "close", "long")
 
 								difference := new(big.Float).Sub(amt, amt2)
+								pnl := new(big.Float).SetFloat64(val2.Pnl)
+								val.Profit, _ = strconv.ParseFloat(makeQuantity(new(big.Float).Mul(new(big.Float).Quo(pnl.Abs(pnl), new(big.Float).Mul(new(big.Float).SetFloat64(val2.Roe), new(big.Float).SetFloat64(100))), difference)), 64)
+								makeRecord(val, "close", "long")
 
 								bf.closePosition(val.Symbol, makeQuantity(difference), futures.PositionSideTypeLong, leverage)
 							}
@@ -105,6 +108,7 @@ func checkDiff(tempPositions []position) {
 						} else {
 							log.Println(val.Symbol + " sellAll LONG ==================================")
 							printRes(val)
+							val.Profit = val.Pnl
 							makeRecord(val, "close", "long")
 
 							bf.closePosition(val.Symbol, makeQuantity(amt), futures.PositionSideTypeLong, leverage)
@@ -129,9 +133,12 @@ func checkDiff(tempPositions []position) {
 							} else if amt.Cmp(amt2) == -1 {
 								log.Println(val.Symbol + " changed SHORT-- ==================================")
 								printRes(val2)
-								makeRecord(val, "close", "short")
 
 								difference := new(big.Float).Sub(amt.Abs(amt), amt2.Abs(amt2))
+								pnl := new(big.Float).SetFloat64(val2.Pnl)
+								val.Profit, _ = strconv.ParseFloat(makeQuantity(new(big.Float).Mul(new(big.Float).Quo(pnl.Abs(pnl), new(big.Float).Mul(new(big.Float).SetFloat64(val2.Roe), new(big.Float).SetFloat64(100))), difference)), 64)
+
+								makeRecord(val, "close", "short")
 
 								bf.closePosition(val.Symbol, makeQuantity(difference), futures.PositionSideTypeLong, leverage)
 							}
@@ -139,6 +146,7 @@ func checkDiff(tempPositions []position) {
 						} else {
 							log.Println(val.Symbol + " sellAll SHORT ==================================")
 							printRes(val)
+							val.Profit = val.Pnl
 							makeRecord(val, "close", "short")
 
 							bf.closePosition(val.Symbol, makeQuantity(amt), futures.PositionSideTypeShort, leverage)
@@ -156,12 +164,14 @@ func checkDiff(tempPositions []position) {
 				if amt.Cmp(new(big.Float).SetFloat64(0)) == 1 {
 					log.Println(val.Symbol + " sellAll LONG ==================================")
 					printRes(val)
+					val.Profit = val.Pnl
 					makeRecord(val, "close", "long")
 
 					bf.closePosition(val.Symbol, makeQuantity(amt), futures.PositionSideTypeLong, leverage)
 				} else {
 					log.Println(val.Symbol + " sellAll SHORT ==================================")
 					printRes(val)
+					val.Profit = val.Pnl
 					makeRecord(val, "close", "short")
 
 					bf.closePosition(val.Symbol, makeQuantity(amt), futures.PositionSideTypeShort, leverage)
@@ -229,7 +239,8 @@ func checkDiff(tempPositions []position) {
 
 func makeRecord(p position, t string, pt string) {
 	_, leverage := makeLeverage(p)
-	res, err := db.Exec("INSERT INTO records(symbol,entryprice,marketprice,pnl,roe,amount,update_timestamp,yellow,tradebefore,type,position_type,leverage) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)", p.Symbol, p.EntryPrice, p.MarkPrice, p.Pnl, p.Roe, math.Abs(p.Amount), p.UpdateTimeStamp, p.Yellow, p.TradeBefore, t, pt, leverage)
+	a := p.Amount
+	res, err := db.Exec("INSERT INTO records(symbol,entryprice,marketprice,pnl,roe,amount,update_timestamp,yellow,tradebefore,type,position_type,leverage,profit) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)", p.Symbol, p.EntryPrice, p.MarkPrice, p.Pnl, p.Roe, math.Abs(a), p.UpdateTimeStamp, p.Yellow, p.TradeBefore, t, pt, leverage, p.Profit)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -107,7 +107,7 @@ func (*binanceFunction) getOrderList(symbol string) {
 	}
 }
 
-func (*binanceFunction) setLeverage(symbol string, leverage int) {
+func (*binanceFunction) setLeverage(symbol string, _leverage int) {
 	// log.Println("setLeverage:")
 	_, err := futuresClient.NewChangeLeverageService().Leverage(leverage).Symbol(symbol).Do(context.Background())
 	if err != nil {
