@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  our_container:
+    container_name: znjsxm-auto
+    hostname: znjsxm-auto
+    image: znjsxm-auto
+    env_file:
+     - .env
