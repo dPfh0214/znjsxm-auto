@@ -1,9 +1,23 @@
 version: '3.8'
 
 services:
-  our_container:
-    container_name: znjsxm-auto
-    hostname: znjsxm-auto
+  db:
+    container_name: db
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1111
+    ports:
+      - '5432:5432'
+    volumes: 
+      - db:/var/lib/postgresql/data
+  auto:
+    container_name: auto
+    hostname: auto
     image: znjsxm-auto
     env_file:
      - .env
+volumes:
+  db:
+    driver: local

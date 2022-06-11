@@ -351,4 +351,6 @@ func setEnv() {
 	client = binance.NewClient(apiKey, secretKey)
 	futuresClient = binance.NewFuturesClient(apiKey, secretKey)   // USDT-M Futures
 	deliveryClient = binance.NewDeliveryClient(apiKey, secretKey) // Coin-M Futures
+
+	futuresClient.TimeOffset = 10000
 }

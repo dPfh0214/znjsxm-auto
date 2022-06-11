@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"time"
 )
 
 var (
@@ -20,8 +21,14 @@ func setDb() {
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
 		"password=%s dbname=%s sslmode=disable",
 		dbHost, dbPort, dbUser, dbPassword, dbName)
-
-	db, _ = sql.Open("postgres", psqlInfo)
+	for {
+		var err error
+		db, err = sql.Open("postgres", psqlInfo)
+		if err == nil {
+			break
+		}
+		time.Sleep(time.Second)
+	}
 
 	err := db.Ping()
 	if err != nil {
